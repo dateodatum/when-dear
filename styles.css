@@ -1,8 +1,87 @@
-/*
+.tag-cloud-container {
+	padding: 8px;
+	background: var(--background-primary);
+	height: 100%;
+	overflow-y: auto;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.tag-cloud {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	align-items: center;
+	justify-content: flex-start;
+	line-height: 1.8;
+}
 
-If your plugin does not need CSS, delete this file.
+.tag-cloud-item {
+	color: var(--text-accent);
+	font-weight: 500;
+	padding: 4px 8px;
+	border-radius: 12px;
+	background: var(--background-secondary);
+	transition: all 0.2s ease;
+	text-decoration: none;
+	white-space: nowrap;
+}
 
-*/
+.tag-cloud-item:hover {
+	background: var(--background-modifier-hover);
+	transform: scale(1.05);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tag-cloud-item:active {
+	transform: scale(0.95);
+}
+
+.tag-cloud-container > div:first-child {
+	text-align: center;
+	color: var(--text-muted);
+	font-style: italic;
+	margin-top: 40px;
+}
+
+.when-dear-controls {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+	padding: 8px;
+	background: var(--background-secondary);
+	border-radius: 6px;
+	font-size: 13px;
+}
+
+.when-dear-label {
+	color: var(--text-muted);
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.when-dear-slider {
+	flex: 1;
+	margin: 0;
+	accent-color: var(--interactive-accent);
+}
+
+.when-dear-value {
+	color: var(--text-accent);
+	font-weight: 600;
+	min-width: 30px;
+	text-align: center;
+}
+
+.tag-cloud-content {
+	flex: 1;
+}
+
+.tag-cloud-header {
+	text-align: center;
+	color: var(--text-muted);
+	font-size: 14px;
+	margin-bottom: 16px;
+	padding: 8px;
+	background: var(--background-secondary);
+	border-radius: 6px;
+}
