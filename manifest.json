@@ -1,0 +1,11 @@
+{
+	"id": "when-dear",
+	"name": "When Dear? Plugin",
+	"version": "0.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "A simple time based search plugin.",
+	"author": "DateoDatum",
+	"authorUrl": "https://dateodatum.com",
+	"helpUrl": "https://github.com/dateodatum/when-dear/issues",
+	"isDesktopOnly": false
+}
