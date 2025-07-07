@@ -1,94 +1,92 @@
-# Obsidian Sample Plugin
+# When Dear? - Tag Cloud Plugin for Obsidian
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+A time-filtered tag cloud plugin for Obsidian that helps you visualize and navigate your most relevant tags based on recent activity.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- **Time-filtered Tag Cloud**: View tags from files modified in the last N days
+- **Frequency Filtering**: Hide infrequent tags by setting a minimum occurrence threshold
+- **Visual Word Cloud**: Tag size reflects frequency - more common tags appear larger
+- **Interactive Navigation**: Click any tag to search for it in your vault
+- **Live Controls**: Adjust the time filter directly in the panel with a slider
+- **Compact Interface**: Minimal design that fits perfectly in your sidebar
 
-## First time developing plugins?
+## How It Works
 
-Quick starting guide for new plugin devs:
+When Dear? collects tags from your vault and displays them as a word cloud, with powerful filtering options to help you focus on what matters:
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+- **Recent work**: See what you've been tagging lately by filtering by modification date
+- **Significant tags**: Hide infrequent tags to focus on your most-used ones
+- **Active projects**: Identify tags from files you're currently working on
+- **Trending topics**: Discover patterns in your recent note-taking
 
-## Releasing new releases
+## Installation
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+1. Copy the built files to your vault:
+   ```
+   VaultFolder/.obsidian/plugins/when-dear/
+   ├── main.js
+   ├── manifest.json
+   └── styles.css
+   ```
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+2. Enable the plugin in Settings → Community Plugins
 
-## Adding your plugin to the community plugin list
+3. Open the panel using:
+   - The tag icon in the ribbon
+   - Command Palette: "Open When Dear?"
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Usage
 
-## How to use
+### Opening the Panel
+- **Ribbon Icon**: Click the tag icon in the left toolbar
+- **Command**: Use "Open When Dear?" from the Command Palette
+- **View Menu**: Select "When Dear?" from the View menu
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+### Time Filter
+- Use the slider at the top of the panel to adjust the time range
+- Set to "All" for all-time tags, or select 1-365 days
+- The tag cloud updates immediately when you change the filter
 
-## Manually installing the plugin
+### Navigation
+- Click any tag to search for it in your vault
+- Hover over tags to see their occurrence count
+- Larger tags indicate more frequent usage
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+## Settings
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
+Access settings via Settings → Plugin Options → When Dear?
 
-## Funding URL
+- **Days back**: Default time filter (0-365 days, 0 = all time)
+- **Minimum occurrences**: Hide tags that appear fewer than N times (1-20, default: 5)
+- **Font size range**: Customize minimum and maximum tag sizes
+- **Color scheme**: Choose your preferred color theme (future feature)
 
-You can include funding URLs where people who use your plugin can financially support it.
+## Development
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+Built with TypeScript for Obsidian. Key files:
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+- `main.ts`: Core plugin logic and tag cloud view
+- `styles.css`: Visual styling and layout
+- `manifest.json`: Plugin metadata
+
+### Building
+
+```bash
+npm install
+npm run build
 ```
 
-If you have multiple URLs, you can also do:
+### Development Mode
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+```bash
+npm run dev
 ```
 
-## API Documentation
+## Why "When Dear?"
 
-See https://github.com/obsidianmd/obsidian-api
+The name reflects the plugin's core purpose - answering "when" you were working on topics by showing tags filtered by time. It helps you understand the temporal context of your knowledge work.
+
+## License
+
+MIT License - see the repository for details.
