@@ -8,6 +8,7 @@ interface TagCloudSettings {
 	colorScheme: string;
 	daysBack: number;
 	minOccurrences: number;
+	ignoreTags: string[];
 }
 
 const DEFAULT_SETTINGS: TagCloudSettings = {
@@ -15,7 +16,8 @@ const DEFAULT_SETTINGS: TagCloudSettings = {
 	maxFontSize: 36,
 	colorScheme: 'default',
 	daysBack: 7,
-	minOccurrences: 5
+	minOccurrences: 5,
+	ignoreTags: []
 }
 
 export default class TagCloudPlugin extends Plugin {
@@ -71,6 +73,15 @@ export default class TagCloudPlugin extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
+
+	refreshActiveView() {
+		const { workspace } = this.app;
+		const leaves = workspace.getLeavesOfType(VIEW_TYPE_TAG_CLOUD);
+		if (leaves.length > 0) {
+			const view = leaves[0].view as TagCloudView;
+			view.refresh();
+		}
+	}
 }
 
 class TagCloudView extends ItemView {
@@ -108,6 +119,7 @@ class TagCloudView extends ItemView {
 		this.tags.clear();
 		const files = this.app.vault.getMarkdownFiles();
 		const daysBack = this.plugin.settings.daysBack;
+		const ignoreTags = this.plugin.settings.ignoreTags.map(tag => tag.toLowerCase());
 		const cutoffDate = daysBack > 0 ? new Date(Date.now() - (daysBack * 24 * 60 * 60 * 1000)) : null;
 
 		for (const file of files) {
@@ -120,7 +132,10 @@ class TagCloudView extends ItemView {
 			if (cache?.tags) {
 				for (const tag of cache.tags) {
 					const tagName = tag.tag.slice(1);
-					this.tags.set(tagName, (this.tags.get(tagName) ?? 0) + 1);
+					// Skip tags that are in the ignore list (case-insensitive)
+					if (!ignoreTags.includes(tagName.toLowerCase())) {
+						this.tags.set(tagName, (this.tags.get(tagName) ?? 0) + 1);
+					}
 				}
 			}
 		}
@@ -219,6 +234,17 @@ class TagCloudView extends ItemView {
 	async onClose() {
 		
 	}
+
+	refresh() {
+		const container = this.containerEl.children[1];
+		const existingCloud = container.querySelector('.tag-cloud-content');
+		if (existingCloud) {
+			existingCloud.remove();
+		}
+		this.collectTags().then(() => {
+			this.renderTagCloud(container);
+		});
+	}
 }
 
 class WhenDearSettingTab extends PluginSettingTab {
@@ -280,6 +306,21 @@ class WhenDearSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					this.plugin.settings.minOccurrences = value;
 					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Ignore tags')
+			.setDesc('Tags to exclude from the word cloud (comma-separated, case-insensitive)')
+			.addTextArea(text => text
+				.setPlaceholder('tag1, tag2, tag3')
+				.setValue(this.plugin.settings.ignoreTags.join(', '))
+				.onChange(async (value) => {
+					this.plugin.settings.ignoreTags = value
+						.split(',')
+						.map(tag => tag.trim())
+						.filter(tag => tag.length > 0);
+					await this.plugin.saveSettings();
+					this.plugin.refreshActiveView();
 				}));
 	}
 }

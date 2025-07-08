@@ -1,6 +1,6 @@
 {
 	"name": "when-dear",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A time-filtered tag cloud that helps you visualize and navigate your most relevant tags based on recent activity.",
 	"main": "main.js",
 	"scripts": {
