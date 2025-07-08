@@ -1,7 +1,7 @@
 {
 	"id": "when-dear",
 	"name": "When Dear?",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"minAppVersion": "0.15.0",
 	"description": "A time-filtered tag cloud that helps you visualize and navigate your most relevant tags based on recent activity.",
 	"author": "DateoDatum",
