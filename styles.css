@@ -18,11 +18,14 @@
 	color: var(--text-accent);
 	font-weight: 500;
 	padding: 4px 8px;
+	margin: 2px 4px;
 	border-radius: 12px;
 	background: var(--background-secondary);
 	transition: all 0.2s ease;
 	text-decoration: none;
 	white-space: nowrap;
+	cursor: pointer;
+	display: inline-block;
 }
 
 .tag-cloud-item:hover {
@@ -34,6 +37,19 @@
 .tag-cloud-item:active {
 	transform: scale(0.95);
 }
+
+/* Dynamic font sizes based on tag frequency */
+.tag-cloud-item[data-weight="0"] { font-size: var(--tag-min-size, 12px); opacity: 0.5; }
+.tag-cloud-item[data-weight="1"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.1); opacity: 0.55; }
+.tag-cloud-item[data-weight="2"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.2); opacity: 0.6; }
+.tag-cloud-item[data-weight="3"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.3); opacity: 0.65; }
+.tag-cloud-item[data-weight="4"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.4); opacity: 0.7; }
+.tag-cloud-item[data-weight="5"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.5); opacity: 0.75; }
+.tag-cloud-item[data-weight="6"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.6); opacity: 0.8; }
+.tag-cloud-item[data-weight="7"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.7); opacity: 0.85; }
+.tag-cloud-item[data-weight="8"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.8); opacity: 0.9; }
+.tag-cloud-item[data-weight="9"] { font-size: calc(var(--tag-min-size, 12px) + (var(--tag-max-size, 36px) - var(--tag-min-size, 12px)) * 0.9); opacity: 0.95; }
+.tag-cloud-item[data-weight="10"] { font-size: var(--tag-max-size, 36px); opacity: 1.0; }
 
 .tag-cloud-container > div:first-child {
 	text-align: center;

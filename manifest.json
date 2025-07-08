@@ -1,9 +1,9 @@
 {
 	"id": "when-dear",
 	"name": "When Dear?",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minAppVersion": "0.15.0",
-	"description": "A simple time based search plugin.",
+	"description": "A time-filtered tag cloud that helps you visualize and navigate your most relevant tags based on recent activity.",
 	"author": "DateoDatum",
 	"authorUrl": "https://dateodatum.com",
 	"helpUrl": "https://github.com/dateodatum/when-dear/issues",

@@ -34,8 +34,8 @@ export default class TagCloudPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: 'open-when-dear',
-			name: 'Open When Dear?',
+			id: 'open-tag-cloud',
+			name: 'Open tag cloud',
 			callback: () => {
 				this.activateView();
 			}
@@ -191,23 +191,23 @@ class TagCloudView extends ItemView {
 		const { minFontSize, maxFontSize } = this.plugin.settings;
 		const fontRange = maxFontSize - minFontSize;
 
+		// Set CSS custom properties for dynamic sizing
+		const rootEl = this.containerEl;
+		rootEl.style.setProperty('--tag-min-size', `${minFontSize}px`);
+		rootEl.style.setProperty('--tag-max-size', `${maxFontSize}px`);
+
 		filteredTags
 			.sort(([a], [b]) => a.localeCompare(b))
 			.forEach(([tag, count]) => {
 				const weight = (count - minCount) / countRange;
-				const fontSize = minFontSize + (weight * fontRange);
-				const opacity = 0.5 + (weight * 0.5);
+				const weightClass = Math.round(weight * 10);
 
 				const tagEl = cloudEl.createEl('span', {
 					text: tag,
 					cls: 'tag-cloud-item'
 				});
 
-				tagEl.style.fontSize = `${fontSize}px`;
-				tagEl.style.opacity = opacity.toString();
-				tagEl.style.margin = '2px 4px';
-				tagEl.style.cursor = 'pointer';
-				tagEl.style.display = 'inline-block';
+				tagEl.setAttribute('data-weight', weightClass.toString());
 				tagEl.title = `${count} occurrence${count === 1 ? '' : 's'}`;
 
 				tagEl.addEventListener('click', () => {
